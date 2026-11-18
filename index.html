@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#09090c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CART3R">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>CART3R Studio</title>
+<style>
+:root{color-scheme:dark;--bg:#09090c;--panel:#171219;--panel2:#100e13;--ink:#f8f1f4;--muted:#aaa0aa;--accent:#ff405d;--accent2:#a51d3a;--line:#642638;--good:#8af0b3}
+:root[data-theme="ocean"]{--accent:#51c9ee;--accent2:#176d91;--line:#20546a;--panel:#101a20;--panel2:#0b1218}
+:root[data-theme="violet"]{--accent:#b58cff;--accent2:#6740a4;--line:#523b78;--panel:#181321;--panel2:#100d18}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#24101a 0,var(--bg) 58%);color:var(--ink);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+header{padding:calc(16px + env(safe-area-inset-top)) 18px 14px;border-bottom:1px solid var(--line);background:#0b090de8;position:sticky;top:0;z-index:4;backdrop-filter:blur(14px)}
+.brand{font-size:25px;font-weight:950;letter-spacing:1.5px;color:var(--accent)}.sub{font-size:10px;letter-spacing:2px;color:var(--muted);margin-top:4px}
+main{max-width:780px;margin:auto;padding:15px 13px 38px}.status{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;color:var(--muted);font-size:11px}.pill{border:1px solid #276b4a;color:var(--good);padding:5px 9px;border-radius:20px;font-size:10px}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:13px}button,select,input{font:inherit}button{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:11px;padding:12px 9px;font-weight:750;font-size:12px;cursor:pointer;touch-action:manipulation;transition:transform .15s,filter .15s,border-color .15s}button:active{transform:scale(.98);filter:brightness(1.3)}button.active,.primary{background:linear-gradient(135deg,var(--accent2),var(--accent));border-color:var(--accent);color:white}
+.card{background:linear-gradient(150deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 10px 30px #0004;animation:rise .25s ease-out}@keyframes rise{from{opacity:.65;transform:translateY(5px)}to{opacity:1;transform:none}}
+h2{font-size:16px;margin:0 0 10px;color:var(--accent)}h3{font-size:13px;margin:0 0 8px}p{color:var(--muted);line-height:1.5;font-size:12px;margin:7px 0}
+textarea,.field,select{width:100%;background:#08080b;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:12px;font:13px/1.65 ui-monospace,SFMono-Regular,monospace;outline:none}
+textarea{min-height:240px;resize:vertical;tab-size:2}textarea:focus,.field:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 18%,transparent)}
+.actions{display:flex;gap:7px;margin-top:9px}.actions button{flex:1;min-height:42px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.row{display:flex;align-items:center;justify-content:space-between;gap:8px}.item{display:flex;align-items:center;justify-content:space-between;gap:9px;padding:11px 0;border-bottom:1px solid #30212a}.item:last-child{border:0}.item small{display:block;color:var(--muted);margin-top:3px}.hidden{display:none!important}.hint{font-size:10px;color:#958b94}.output{min-height:100px;max-height:300px;overflow:auto;white-space:pre-wrap;background:#08080b;border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--good);font:12px/1.7 ui-monospace,monospace}.tag{font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:4px 8px}.footer{text-align:center;color:#756c75;font-size:10px;letter-spacing:1px;padding:12px}.smallbtn{padding:8px;font-size:10px}.setting{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #30212a}.setting:last-child{border:0}.preview{font:12px/1.6 ui-monospace,monospace;background:#0a090d;padding:10px;border-radius:9px;white-space:pre-wrap;color:var(--accent);max-height:120px;overflow:auto}.badge{color:var(--good)}
+</style>
+</head>
+<body>
+<header><div class="brand">CART3R STUDIO</div><div class="sub">PERSONAL SCRIPT LEARNING WORKSPACE</div></header>
+<main>
+<div class="status"><span>VERSION 2.0 · LEARNING SANDBOX</span><span class="pill">● READY</span></div>
+<nav aria-label="Sections">
+<button class="active" data-tab="editor">EDITOR</button><button data-tab="library">LIBRARY</button><button data-tab="console">CONSOLE</button><button data-tab="settings">SETTINGS</button>
+</nav>
+<section id="editor">
+<div class="card">
+<div class="row"><h2>Script Editor</h2><span class="tag">Lua-style basics</span></div>
+<p>This is a safe learning sandbox. It does not connect to Roblox, inject code, or run scripts in other apps.</p>
+<label class="hint" for="scriptName">SCRIPT NAME</label><input class="field" id="scriptName" value="My first script" maxlength="40">
+<label class="hint" for="code">CODE</label>
+<textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off">-- Welcome to CART3R Studio
+local greeting = "Hello from CART3R!"
+print(greeting)
+print("You made your first script.")</textarea>
+<div class="actions"><button class="primary" id="run">▶ RUN</button><button id="save">SAVE</button><button id="clear">CLEAR</button></div>
+<p class="hint">Supported: comments (--), local name = "text", and print("text") or print(name).</p>
+</div>
+<div class="card"><h2>Syntax preview</h2><p>Live preview of your code with comments and print statements highlighted.</p><pre id="highlight" class="preview"></pre></div>
+<div class="card"><h2>Quick lessons</h2><div class="item"><div><b>1. Print text</b><small>print("Hello!") displays a message.</small></div><button class="smallbtn" data-lesson="print">LOAD</button></div><div class="item"><div><b>2. Variables</b><small>local score = "10" stores text.</small></div><button class="smallbtn" data-lesson="vars">LOAD</button></div><div class="item"><div><b>3. Comments</b><small>Start a note with two dashes: --</small></div><button class="smallbtn" data-lesson="comments">LOAD</button></div></div>
+</section>
+<section id="library" class="hidden">
+<div class="card"><div class="row"><h2>Script Library</h2><span class="tag" id="scriptCount">0 scripts</span></div><p>Scripts are saved only in this browser on this device. Use folders/tags to organize them.</p><div class="grid2"><input id="folderFilter" class="field" placeholder="Filter by folder"><button id="newFolder">＋ NEW FOLDER</button></div><div id="saved" style="margin-top:8px"></div></div>
+</section>
+<section id="console" class="hidden"><div class="card"><div class="row"><h2>Output Console</h2><span class="tag badge">LOCAL DEMO</span></div><div id="output" class="output">CART3R console ready. Run a lesson or your script.</div><div class="actions"><button id="clearlog">CLEAR CONSOLE</button><button id="copylog">COPY OUTPUT</button></div></div></section>
+<section id="settings" class="hidden">
+<div class="card"><h2>Appearance</h2><div class="setting"><label for="theme">Color theme</label><select id="theme"><option value="red">Crimson</option><option value="ocean">Ocean</option><option value="violet">Violet</option></select></div><div class="setting"><label for="fontSize">Editor text size</label><select id="fontSize"><option value="12">Small</option><option value="13" selected>Medium</option><option value="16">Large</option><option value="18">Extra large</option></select></div><div class="setting"><label for="motion">Animations</label><select id="motion"><option value="on">On</option><option value="off">Reduced</option></select></div></div>
+<div class="card"><h2>Data & privacy</h2><p>Your scripts stay in local browser storage on this device. They are not uploaded to a server by this app.</p><div class="actions"><button id="export">EXPORT SCRIPTS</button><button id="import">IMPORT JSON</button></div><input type="file" id="importFile" accept="application/json" class="hidden"></div>
+<div class="card"><h2>About</h2><p>CART3R Studio v2.0 is an educational text editor and limited Lua-style demo interpreter. It is not a full Lua runtime or a Roblox executor.</p></div>
+</section>
+<div class="footer">CART3R STUDIO · PRIVATE LEARNING PROJECT</div>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id), tabs=['editor','library','console','settings'];
+let scripts=loadScripts(), lastOutput='';
+function loadScripts(){try{return JSON.parse(localStorage.getItem('c3_scripts')||'[]')}catch(e){return []}}
+function persist(){localStorage.setItem('c3_scripts',JSON.stringify(scripts))}
+function tab(name){tabs.forEach(t=>$(t).classList.toggle('hidden',t!==name));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));if(name==='library')renderLibrary();if(name==='console')$('output').textContent=lastOutput||'CART3R console ready.'}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.tab)));
+function escapeHTML(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function updatePreview(){const code=$('code').value; $('highlight').innerHTML=escapeHTML(code).replace(/(--.*)$/gm,'<span style="color:#8a8290">$1</span>').replace(/\b(print|local)\b/g,'<span style="color:var(--accent)">$1</span>').replace(/(&quot;.*?&quot;|&#39;.*?&#39;)/g,'<span style="color:#a8f0bd">$1</span>')||' '}
+$('code').addEventListener('input',updatePreview);$('code').addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=e.target,s=a.selectionStart;a.setRangeText('  ',s,a.selectionEnd,'end')}});
+function writeOutput(lines){lastOutput=lines.join('\n');$('output').textContent=lastOutput}
+function runCode(){const vars={},out=['CART3R sandbox started.'];let count=0;for(const raw of $('code').value.split(/\r?\n/)){const line=raw.trim();if(!line||line.startsWith('--'))continue;let m=line.match(/^local\s+([A-Za-z_]\w*)\s*=\s*["'](.*?)["']\s*$/);if(m){vars[m[1]]=m[2];continue}m=line.match(/^print\s*\(\s*(["'])(.*?)\1\s*\)\s*$/);if(m){out.push(m[2]);count++;continue}m=line.match(/^print\s*\(\s*([A-Za-z_]\w*)\s*\)\s*$/);if(m&&Object.prototype.hasOwnProperty.call(vars,m[1])){out.push(vars[m[1]]);count++;continue}out.push('Skipped unsupported line: '+line)}out.push(count?'Finished.':'No supported print statements found.');writeOutput(out);tab('console')}
+$('run').addEventListener('click',runCode);
+$('clear').addEventListener('click',()=>{$('code').value='';updatePreview();$('code').focus()});
+$('save').addEventListener('click',()=>{const name=$('scriptName').value.trim()||'Untitled';const id=Date.now().toString();scripts.push({id,name,folder:'General',code:$('code').value,updated:new Date().toLocaleString()});persist();alert('Saved to your library.');});
+$('clearlog').addEventListener('click',()=>writeOutput(['Console cleared.']));
+$('copylog').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(lastOutput);alert('Console copied.')}catch(e){alert('Copy is unavailable in this browser.')}});
+document.querySelectorAll('[data-lesson]').forEach(b=>b.addEventListener('click',()=>{const lessons={print:'-- Print a message\nprint("Hello, learner!")',vars:'-- Store text in a variable\nlocal greeting = "Welcome back!"\nprint(greeting)',comments:'-- This is a comment\nprint("Comments are ignored by the demo.")'};$('code').value=lessons[b.dataset.lesson];$('scriptName').value=b.dataset.lesson+' lesson';updatePreview();tab('editor')}));
+function renderLibrary(){const host=$('saved');host.replaceChildren();$('scriptCount').textContent=scripts.length+' scripts';const filter=$('folderFilter').value.trim().toLowerCase();const shown=scripts.filter(s=>!filter||(s.folder||'General').toLowerCase().includes(filter));if(!shown.length){host.textContent='No matching scripts. Save one from the Editor.';return}shown.slice().reverse().forEach(s=>{const row=document.createElement('div');row.className='item';const info=document.createElement('div');const title=document.createElement('b');title.textContent=s.name;const small=document.createElement('small');small.textContent=(s.folder||'General')+' · '+(s.updated||'');info.append(title,small);const controls=document.createElement('div');controls.className='actions';const load=document.createElement('button');load.textContent='LOAD';load.className='smallbtn';load.addEventListener('click',()=>{$('code').value=s.code;$('scriptName').value=s.name;updatePreview();tab('editor')});const rename=document.createElement('button');rename.textContent='RENAME';rename.className='smallbtn';rename.addEventListener('click',()=>{const n=prompt('New script name',s.name);if(n&&n.trim()){s.name=n.trim();persist();renderLibrary()}});const del=document.createElement('button');del.textContent='DELETE';del.className='smallbtn';del.addEventListener('click',()=>{if(confirm('Delete this saved script?')){scripts=scripts.filter(x=>x.id!==s.id);persist();renderLibrary()}});controls.append(load,rename,del);row.append(info,controls);host.append(row)})}
+$('folderFilter').addEventListener('input',renderLibrary);
+$('newFolder').addEventListener('click',()=>{const f=prompt('Folder names are used as tags. Enter a folder name:');if(f&&f.trim()){const first=scripts.find(s=>s.folder==='General');if(first){first.folder=f.trim();persist();renderLibrary()}else alert('Save a script first, then rename its folder tag in the library.') }});
+$('theme').addEventListener('change',e=>{document.documentElement.dataset.theme=e.target.value==='red'?'':e.target.value;localStorage.setItem('c3_theme',e.target.value)});
+$('fontSize').addEventListener('change',e=>{$('code').style.fontSize=e.target.value+'px';localStorage.setItem('c3_font',e.target.value)});
+$('motion').addEventListener('change',e=>{document.documentElement.style.setProperty('--motion',e.target.value==='off'?'0':'1');document.querySelectorAll('.card').forEach(c=>c.style.animation=e.target.value==='off'?'none':'')});
+$('export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(scripts,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='cartrer-scripts.json';a.click();URL.revokeObjectURL(url)});
+$('import').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());if(!Array.isArray(data))throw Error();scripts=scripts.concat(data.filter(x=>x&&typeof x.name==='string'&&typeof x.code==='string').map(x=>({...x,id:Date.now()+'-'+Math.random()})));persist();alert('Scripts imported.')}catch(err){alert('That file is not a valid CART3R script export.')}e.target.value=''});
+$('theme').value=localStorage.getItem('c3_theme')||'red';document.documentElement.dataset.theme=$('theme').value==='red'?'':$('theme').value;$('fontSize').value=localStorage.getItem('c3_font')||'13';$('code').style.fontSize=$('fontSize').value+'px';
+updatePreview();renderLibrary();
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{});
+})();
+</script>
+</body></html>
