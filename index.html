@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#09090c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CART3R">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>CART3R EXECUTOR</title>
+<style>
+:root{color-scheme:dark;--bg:#09090c;--panel:#151117;--panel2:#1d151c;--red:#ff405d;--muted:#aaa1aa;--line:#672536}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#24101a 0,#09090c 55%);color:#f7f1f4;font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+header{padding:calc(18px + env(safe-area-inset-top)) 18px 16px;border-bottom:1px solid var(--line);background:#0b090de8;position:sticky;top:0;z-index:2;backdrop-filter:blur(12px)}
+.brand{font-size:24px;font-weight:900;letter-spacing:1.5px;color:var(--red)}.sub{font-size:10px;letter-spacing:2px;color:var(--muted);margin-top:4px}
+main{max-width:760px;margin:auto;padding:16px 14px 40px}.status{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;color:var(--muted);font-size:12px}.pill{border:1px solid #276b4a;color:#8af0b3;padding:5px 9px;border-radius:20px;font-size:10px;letter-spacing:1px}
+nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}button{border:1px solid var(--line);background:#20151d;color:#f7eaf0;border-radius:11px;padding:12px 10px;font-weight:700;font-size:13px;cursor:pointer}button.active,.primary{background:linear-gradient(135deg,#a51d3a,#ed3454);border-color:#ff526c;color:white}
+.card{background:linear-gradient(150deg,#19131a,#100e13);border:1px solid #51202e;border-radius:16px;padding:15px;margin-bottom:13px;box-shadow:0 10px 30px #0005}
+h2{font-size:16px;margin:0 0 12px;color:#ff7186}p{color:var(--muted);line-height:1.5;font-size:13px}
+textarea{width:100%;min-height:210px;resize:vertical;background:#08080b;border:1px solid #4d2934;border-radius:12px;color:#f6dce5;padding:13px;font:13px/1.6 ui-monospace,SFMono-Regular,monospace;outline:none}
+.actions{display:flex;gap:8px;margin-top:10px}.actions button{flex:1}.output{min-height:90px;white-space:pre-wrap;background:#08080b;border:1px solid #35232b;border-radius:10px;padding:12px;color:#a8f0bd;font:12px/1.6 ui-monospace,monospace}
+.item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #30212a}.item:last-child{border:0}.item small{display:block;color:var(--muted);margin-top:3px}
+.hidden{display:none}.hint{font-size:11px;color:#958b94}.footer{text-align:center;color:#756c75;font-size:10px;letter-spacing:1px;padding:10px}
+</style>
+</head>
+<body>
+<header><div class="brand">CART3R EXECUTOR</div><div class="sub">PERSONAL SCRIPT WORKSPACE</div></header>
+<main>
+ <div class="status"><span>VERSION 1.0 · STANDALONE DEMO</span><span class="pill">● READY</span></div>
+ <nav>
+  <button class="active" data-tab="editor">EDITOR</button>
+  <button data-tab="library">LIBRARY</button>
+  <button data-tab="console">CONSOLE</button>
+ </nav>
+ <section id="editor">
+  <div class="card"><h2>Script Editor</h2><p>Write and test simple examples in this app's demo console. This does not connect to Roblox or run scripts in other apps.</p>
+   <textarea id="code" spellcheck="false">-- CART3R demo script
+print("Hello from CART3R!")
+print("My first script is working.")</textarea>
+   <div class="actions"><button class="primary" id="run">▶ RUN DEMO</button><button id="clear">CLEAR</button><button id="save">SAVE</button></div>
+   <p class="hint">Demo supports print("text") lines and comments beginning with --.</p>
+  </div>
+  <div class="card"><h2>Quick start</h2><p>Tap RUN DEMO to show the print messages in the console. Tap SAVE to keep your script in this browser on this device.</p></div>
+ </section>
+ <section id="library" class="hidden">
+  <div class="card"><h2>My Script Library</h2><p>Saved scripts stay in this browser on this iPhone.</p><div id="saved"></div></div>
+  <div class="card"><h2>Examples</h2><div class="item"><div><b>Hello World</b><small>A simple print example</small></div><button id="example">LOAD</button></div></div>
+ </section>
+ <section id="console" class="hidden">
+  <div class="card"><h2>Output Console</h2><div id="output" class="output">CART3R console ready.</div><div class="actions"><button id="clearlog">CLEAR CONSOLE</button></div></div>
+ </section>
+ <div class="footer">CART3R · PRIVATE LEARNING PROJECT</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{
+ document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x===b));
+ ["editor","library","console"].forEach(t=>$(t).classList.toggle("hidden",t!==b.dataset.tab));
+ if(b.dataset.tab==="library") renderSaved();
+}));
+function log(s){$("output").textContent += "\n"+s}
+$("run").onclick=()=>{
+ $("output").textContent="CART3R demo started.";
+ const lines=$("code").value.split(/\r?\n/); let count=0;
+ for(const line of lines){const m=line.match(/^\s*print\s*\(\s*["'](.*?)["']\s*\)\s*$/);if(m){log(m[1]);count++}}
+ log(count?"Demo finished.":"No supported print(\\"text\\") lines found.");
+ document.querySelector('[data-tab="console"]').click();
+};
+$("clear").onclick=()=>$("code").value="";
+$("clearlog").onclick=()=>$("output").textContent="CART3R console cleared.";
+$("save").onclick=()=>{localStorage.setItem("cartrer_script",$("code").value);alert("Script saved on this device.");};
+$("example").onclick=()=>{$("code").value='-- Hello World example\nprint("Hello from CART3R!")';document.querySelector('[data-tab="editor"]').click()};
+function renderSaved(){const v=localStorage.getItem("cartrer_script");$("saved").innerHTML="";if(!v){$("saved").textContent="No saved scripts yet.";return;}const row=document.createElement("div");row.className="item";const label=document.createElement("b");label.textContent="My saved script";const load=document.createElement("button");load.textContent="LOAD";load.onclick=()=>{$("code").value=v;document.querySelector('[data-tab="editor"]').click()};row.append(label,load);$("saved").append(row)}
+if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script>
+</body></html>
