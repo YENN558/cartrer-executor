@@ -36,7 +36,7 @@ nav button{background:transparent;color:var(--muted);font-size:10px;display:grid
 </style>
 </head>
 <body data-theme="crimson">
-<header><div class="brand"><div class="logo">C</div><div>YENN <span class="muted">STUDIO</span></div></div><span class="pill">V3.0 • LOCAL</span></header>
+<header><div class="brand"><div class="logo">Y</div><div>YENN <span class="muted">STUDIO</span></div></div><span class="pill">V4.0 • CYBER</span></header>
 <main>
 <section id="home" class="view active">
   <div class="row between"><div><div class="sub">YOUR CREATIVE WORKSPACE</div><h1>Welcome back.</h1><p>Build, edit, test, and organize your projects.</p></div><div class="logo" style="width:54px;height:54px;font-size:23px">C</div></div>
@@ -165,4 +165,5 @@ function resetWorkspace(){if(confirm('This permanently clears all local YENN pro
 load();
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script>
+<script src="yenn-upgrades.js"></script>
 </body></html>

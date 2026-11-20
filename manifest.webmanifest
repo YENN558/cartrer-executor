@@ -3,8 +3,8 @@
   "short_name": "YENN",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0d0f14",
-  "theme_color": "#101116",
+  "background_color": "#080d0b",
+  "theme_color": "#08100c",
   "icons": [
     {
       "src": "icon-192.png",
