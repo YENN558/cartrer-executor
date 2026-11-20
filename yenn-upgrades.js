@@ -24,4 +24,57 @@ const oldSave=window.saveProject;
 if(typeof oldSave==='function'){window.saveProject=function(){let prior=null;try{prior=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){}oldSave();if(prior){let hist=[];try{hist=JSON.parse(localStorage.getItem(KEY+'_history')||'[]')}catch(e){}hist.unshift({at:new Date().toISOString(),workspace:prior});hist=hist.slice(0,10);try{localStorage.setItem(KEY+'_history',JSON.stringify(hist))}catch(e){}const box=$('yennHistory');if(box){box.textContent='Previous workspace versions: '+hist.length+' saved locally.';const b=document.createElement('button');b.className='btn secondary small';b.textContent='Restore previous workspace';b.onclick=()=>{if(confirm('Restore the previous workspace backup? Current workspace data will be replaced.')){localStorage.setItem(KEY,JSON.stringify(hist[0].workspace));location.reload();}};box.appendChild(b);}}}}
 const ai=$('carter');
 if(ai){const card=document.createElement('div');card.className='card';card.innerHTML='<h2>AI Prompt Studio</h2><p>Build a focused prompt from your task and current editor code. Copy it into ChatGPT.</p><input id="yennAiTask" placeholder="What do you want help with?"><button class="btn secondary" style="margin-top:9px" id="yennAiCopy">Create coding prompt</button>';ai.append(card);$('yennAiCopy').onclick=()=>{const prompt='Act as a patient coding tutor. Explain the solution step by step. Task: '+$('yennAiTask').value+'\n\nCurrent code:\n'+($('code')?.value||'No code attached');if(navigator.clipboard?.writeText)navigator.clipboard.writeText(prompt).then(()=>alert('Prompt copied. Paste it into ChatGPT.')).catch(()=>alert(prompt));else alert(prompt);};}
+
+const phoneView=document.getElementById('phoneLookup');
+if(phoneView){
+ const input=document.getElementById('yennPhoneInput');
+ const result=document.getElementById('yennPhoneResult');
+ const regions={
+  '205':'Central Alabama (Birmingham area)','659':'Central Alabama (Birmingham area)',
+  '256':'North and east Alabama','938':'North and east Alabama','334':'Central and south Alabama',
+  '212':'New York City, New York','213':'Los Angeles, California','305':'Miami, Florida',
+  '312':'Chicago, Illinois','404':'Atlanta, Georgia','415':'San Francisco, California',
+  '512':'Austin, Texas','617':'Boston, Massachusetts','702':'Las Vegas, Nevada',
+  '713':'Houston, Texas','202':'Washington, DC','206':'Seattle, Washington',
+  '303':'Denver, Colorado','602':'Phoenix, Arizona','615':'Nashville, Tennessee',
+  '214':'Dallas, Texas','216':'Cleveland, Ohio','313':'Detroit, Michigan',
+  '704':'Charlotte, North Carolina','801':'Salt Lake City, Utah','808':'Hawaii',
+  '907':'Alaska'
+ };
+ const calling=[
+  ['1','United States / Canada and NANP regions'],['44','United Kingdom'],['61','Australia'],
+  ['64','New Zealand'],['91','India'],['81','Japan'],['82','South Korea'],
+  ['49','Germany'],['33','France'],['34','Spain'],['39','Italy'],['55','Brazil'],
+  ['52','Mexico'],['27','South Africa'],['971','United Arab Emirates'],
+  ['966','Saudi Arabia'],['65','Singapore'],['60','Malaysia'],['63','Philippines'],
+  ['62','Indonesia'],['90','Türkiye'],['7','Russia / Kazakhstan'],
+  ['353','Ireland'],['31','Netherlands'],['46','Sweden'],['47','Norway'],
+  ['48','Poland'],['351','Portugal'],['20','Egypt'],['234','Nigeria']
+ ].sort((a,b)=>b[0].length-a[0].length);
+ const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const lookup=()=>{
+  const raw=input.value.trim();
+  const digits=raw.replace(/\D/g,'');
+  if(!raw||digits.length<7||digits.length>15){result.innerHTML='<p style="color:#ff8a8a">Enter a valid-looking phone number with 7–15 digits.</p>';return;}
+  if(!/^[+()\d.\s-]+$/.test(raw)){result.innerHTML='<p style="color:#ff8a8a">Use digits and common phone-number separators only.</p>';return;}
+  let country='Unknown from available numbering data',code='',national=digits;
+  if(raw.startsWith('+')){
+   const found=calling.find(([c])=>digits.startsWith(c));
+   if(found){code='+'+found[0];country=found[1];national=digits.slice(found[0].length);}
+  }else if(digits.length===10){
+   code='+1';country='United States / Canada and NANP regions';national=digits;
+  }else if(digits.length===11&&digits.startsWith('1')){
+   code='+1';country='United States / Canada and NANP regions';national=digits.slice(1);
+  }else{
+   result.innerHTML='<p style="color:#ffcf70">For international numbers, include the + country calling code (for example, +44). Without it, the country cannot be identified reliably.</p>';return;
+  }
+  let region='Not available for this area code in the offline dataset';
+  if(code==='+1'&&national.length===10)region=regions[national.slice(0,3)]||region;
+  const shown=code?code+' '+national:'Not enough information';
+  result.innerHTML='<div class="card" style="margin-top:10px"><div class="sub">LOOKUP RESULTS</div><h2>'+esc(shown)+'</h2><p><b>Country / numbering region:</b> '+esc(country)+'</p><p><b>Calling code:</b> '+esc(code||'Unknown')+'</p><p><b>Area-code region:</b> '+esc(region)+'</p><p><b>Number type:</b> Not reliably available offline</p><p><b>Live location:</b> Not available — this does not locate the phone or its owner.</p><p><b>Spam reputation:</b> Not checked — no live spam database is connected.</p><p class="sub">Results describe numbering-plan information only. They do not confirm ownership or current location.</p></div>';
+ };
+ document.getElementById('yennPhoneSearch').addEventListener('click',lookup);
+ input.addEventListener('keydown',e=>{if(e.key==='Enter')lookup();});
+ document.getElementById('yennPhoneClear').addEventListener('click',()=>{input.value='';result.textContent='Enter a number to see available numbering information.';input.focus();});
+}
 })();
