@@ -101,6 +101,19 @@ nav button{background:transparent;color:var(--muted);font-size:10px;display:grid
   <div class="notice">No API key is stored in this app. Never paste private passwords, account tokens, or secret API keys into public website code.</div>
 </section>
 
+<section id="phoneLookup" class="view">
+  <div class="sub">YENN PRIVACY TOOL</div><h1>Phone Number Lookup</h1>
+  <p class="sub">Check a number's country, calling code, and supported area-code region.</p>
+  <div class="card">
+    <h2>📞 Number search</h2>
+    <label for="yennPhoneInput">Phone number</label>
+    <input id="yennPhoneInput" type="tel" inputmode="tel" autocomplete="off" placeholder="+1 205 555 0123" maxlength="30" aria-describedby="yennPhonePrivacy">
+    <p id="yennPhonePrivacy" class="sub">Processed on this device. The number is not sent to a lookup server.</p>
+    <div class="toolbar"><button class="btn" id="yennPhoneSearch" type="button">🔎 Look up number</button><button class="btn secondary" id="yennPhoneClear" type="button">Clear</button></div>
+    <div id="yennPhoneResult" aria-live="polite" class="sub" style="margin-top:14px">Enter a number to see available numbering information.</div>
+  </div>
+  <div class="card"><h2>🛡️ Privacy & accuracy</h2><p>Area codes show where a number was originally assigned, not where its owner is now. People can keep numbers after moving, and caller ID can be spoofed.</p><p>This offline tool does not identify people, find addresses, track live GPS, verify who owns a number, or query a live spam database. Mobile/landline type is not reliably determined by this offline lookup.</p></div>
+</section>
 <section id="settings" class="view">
   <div class="sub">MAKE IT YOURS</div><h1>Settings</h1>
   <div class="card"><h2>Appearance</h2><label>Accent theme</label><select id="themeSelect" onchange="setTheme(this.value)"><option value="crimson">Crimson</option><option value="ocean">Ocean</option><option value="violet">Violet</option><option value="lime">Lime</option></select>
@@ -116,6 +129,7 @@ nav button{background:transparent;color:var(--muted);font-size:10px;display:grid
 <button data-go="projects" onclick="go('projects')"><strong>🗂️</strong>Projects</button>
 <button data-go="library" onclick="go('library')"><strong>📚</strong>Library</button>
 <button data-go="carter" onclick="go('carter')"><strong>✨</strong>CARTER</button>
+<button data-go="phoneLookup" onclick="go('phoneLookup')"><strong>📞</strong>Lookup</button>
 <button data-go="settings" onclick="go('settings')"><strong>⚙️</strong>Settings</button>
 </nav>
 <script>
