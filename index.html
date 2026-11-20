@@ -112,6 +112,17 @@ nav button{background:transparent;color:var(--muted);font-size:10px;display:grid
     <div class="toolbar"><button class="btn" id="yennPhoneSearch" type="button">🔎 Look up number</button><button class="btn secondary" id="yennPhoneClear" type="button">Clear</button></div>
     <div id="yennPhoneResult" aria-live="polite" class="sub" style="margin-top:14px">Enter a number to see available numbering information.</div>
   </div>
+  <div class="card" id="yennGamerLookup">
+    <div class="sub">PUBLIC GAMING PROFILES</div><h2>🎮 Xbox & PlayStation Lookup</h2>
+    <p>Search an Xbox gamertag or PS4/PS5 online ID and open public profile results.</p>
+    <label for="yennGamerPlatform">Platform</label>
+    <select id="yennGamerPlatform"><option value="xbox">Xbox</option><option value="psn">PlayStation 4 / 5</option></select>
+    <label for="yennGamerTag">Gamertag / Online ID</label>
+    <input id="yennGamerTag" type="text" autocomplete="off" maxlength="40" placeholder="Enter public gamer tag">
+    <div class="toolbar"><button class="btn" id="yennGamerSearch" type="button">🔎 Search public profile</button><button class="btn secondary" id="yennGamerClear" type="button">Clear</button></div>
+    <div id="yennGamerResult" class="sub" aria-live="polite" style="margin-top:12px">Choose a platform and enter a tag to search.</div>
+    <p class="sub">Only public profile search pages are opened. Available details depend on each platform's privacy settings. This tool does not retrieve IP addresses, real-world identity, location, private friends, messages, or hidden account data. There is no official public API connected, so results open in the browser rather than being copied into YENN automatically.</p>
+  </div>
   <div class="card"><h2>🛡️ Privacy & accuracy</h2><p>Area codes show where a number was originally assigned, not where its owner is now. People can keep numbers after moving, and caller ID can be spoofed.</p><p>This offline tool does not identify people, find addresses, track live GPS, verify who owns a number, or query a live spam database. Mobile/landline type is not reliably determined by this offline lookup.</p></div>
 </section>
 <section id="settings" class="view">
@@ -180,4 +191,5 @@ load();
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script>
 <script src="yenn-upgrades.js"></script>
+<script src="yenn-gamer-lookup.js"></script>
 </body></html>
